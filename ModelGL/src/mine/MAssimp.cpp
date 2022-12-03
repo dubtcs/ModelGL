@@ -70,4 +70,62 @@ namespace MY {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
+	void Model::Draw(MShader& shader) {
+		for (Mesh& mesh : meshes) {
+			mesh.Draw(shader);
+		}
+	}
+
+	void Model::LoadModel(std::string filePath) {
+		Assimp::Importer importer;
+		const aiScene* scene{ importer.ReadFile(filePath, aiProcess_Triangulate | aiProcess_FlipUVs) };
+		if (!scene || (scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE) || !scene->mRootNode) {
+			std::cout << "Model scene not created uh oh stinky: " << importer.GetErrorString() << std::endl;
+			return;
+		}
+		directory = filePath.substr(0, filePath.find_last_of('/'));
+		std::cout << directory;
+		ProcessNode(scene->mRootNode, scene);
+		return;
+	}
+
+	void Model::ProcessNode(aiNode* node, const aiScene* scene) {
+		for (int i{ 0 }; i < node->mNumMeshes; i++) {
+			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+			meshes.push_back(ProcessMesh(mesh, scene));
+		}
+		for (int i{ 0 }; i < node->mNumChildren; i++) {
+			ProcessNode(node->mChildren[i], scene);
+		}
+		return;
+	}
+
+	Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene) {
+		std::vector<Vertex> vertices;
+		std::vector<unsigned int> indices;
+		std::vector<Texture> textues;
+		for (int i{ 0 }; mesh->mNumVertices; i++) {
+			aiVector3D& vertInfo{ mesh->mVertices[i] };
+			glm::vec3 position{ vertInfo.x, vertInfo.y, vertInfo.z };
+
+			vertInfo = mesh->mNormals[i];
+			glm::vec3 normal{ vertInfo.x, vertInfo.y, vertInfo.z };
+
+			glm::vec2 textureCoords{ 0.f, 0.f };
+			if (mesh->mTextureCoords[0]) {
+				aiVector3D& texInfo{ mesh->mTextureCoords[0][i] };
+				textureCoords = { texInfo.x, texInfo.y };
+			}
+
+			Vertex vert{ position, normal, textureCoords };
+			vertices.push_back(vert);
+		}
+		for (int i{ 0 }; i < mesh->mNumFaces; i++) {
+			aiFace& face = mesh->mFaces[i];
+			for (int b{ 0 }; b < face.mNumIndices; b++) {
+				indices.push_back(face.mIndices[b]);
+			}
+		}
+	}
+
 } // END MY

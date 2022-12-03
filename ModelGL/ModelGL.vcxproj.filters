@@ -60,6 +60,7 @@
   <ItemGroup>
     <None Include="src\shaders\f1.frag" />
     <None Include="src\shaders\v1.vert" />
+    <None Include="assimp-vc143-mtd.dll" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="data\textures\aries.png">

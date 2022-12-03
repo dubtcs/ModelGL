@@ -9,6 +9,16 @@
 const unsigned int WIDTH{ 1920 };
 const unsigned int HEIGHT{ 1080 };
 
+void d(unsigned int fl) {
+	std::cout << fl << std::endl;
+}
+
+class B {
+public:
+	B(int& j) : x{ j } {}
+	int x;
+};
+
 int main() {
 	MWindow window{ WIDTH, HEIGHT };
 

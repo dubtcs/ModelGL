@@ -168,6 +168,7 @@
     <ClInclude Include="src\mine\MWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assimp-vc143-mtd.dll" />
     <None Include="src\shaders\f1.frag" />
     <None Include="src\shaders\v1.vert" />
   </ItemGroup>

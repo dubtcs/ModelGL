@@ -6,6 +6,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -50,6 +54,20 @@ namespace MY {
 	private:
 		unsigned int vertexArray, vertexBuffer, elementBuffer;
 		void SetupMesh();
+	};
+
+	class Model {
+	public:
+		Model(const char* filePath) { LoadModel(filePath); };
+	public:
+		void Draw(MShader& shader);
+	private:
+		std::vector<Mesh> meshes;
+		std::string directory;
+		void LoadModel(std::string path);
+		void ProcessNode(aiNode* node, const aiScene* scene);
+		Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
+		std::vector<Texture> LoadMaterialTextures(aiMaterial* material, aiTextureType type, std::string typeName);
 	};
 
 } // END MY
