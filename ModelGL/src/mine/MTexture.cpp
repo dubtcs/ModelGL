@@ -6,6 +6,7 @@
 #include <iostream>
 
 MTexture::MTexture(const std::string& path, GLenum slot, bool isRGBA) {
+	int texWidth, texHeight, colorChannels;
 	glGenTextures(1, &id);
 	glActiveTexture(slot);
 	glBindTexture(GL_TEXTURE_2D, id);

@@ -153,19 +153,27 @@
   <ItemGroup>
     <ClCompile Include="src\extern\glad.c" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\mine\MAssimp.cpp" />
     <ClCompile Include="src\mine\MCamera.cpp" />
     <ClCompile Include="src\mine\MShader.cpp" />
-    <ClCompile Include="src\mine\MTexture.cpp" />
     <ClCompile Include="src\mine\MWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\extern\stb_image.h" />
     <ClInclude Include="src\mine\allinclude.h" />
+    <ClInclude Include="src\mine\MAssimp.h" />
     <ClInclude Include="src\mine\MCamera.h" />
     <ClInclude Include="src\mine\MLight.h" />
     <ClInclude Include="src\mine\MShader.hpp" />
-    <ClInclude Include="src\mine\MTexture.h" />
     <ClInclude Include="src\mine\MWindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\f1.frag" />
+    <None Include="src\shaders\v1.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\textures\aries.png" />
+    <Image Include="data\textures\minn.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

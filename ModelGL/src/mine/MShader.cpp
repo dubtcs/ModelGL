@@ -62,6 +62,9 @@ void MShader::Set(const std::string& name, bool v) const {
 void MShader::Set(const std::string& name, int v) const {
 	glUniform1i(glGetUniformLocation(id, name.c_str()), v);
 }
+void MShader::Set(const std::string& name, unsigned int v) const {
+	glUniform1i(glGetUniformLocation(id, name.c_str()), v);
+}
 void MShader::Set(const std::string& name, float v) const {
 	glUniform1f(glGetUniformLocation(id, name.c_str()), v);
 }

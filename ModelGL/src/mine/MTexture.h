@@ -12,6 +12,5 @@ public:
 	static void StripSlot(GLenum s); // E MEEEE
 private:
 	GLenum bindSlot;
-	int texWidth, texHeight, colorChannels;
 	unsigned int id;
 };

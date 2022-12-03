@@ -27,10 +27,10 @@
     <ClCompile Include="src\mine\MShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mine\MTexture.cpp">
+    <ClCompile Include="src\mine\MWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mine\MWindow.cpp">
+    <ClCompile Include="src\mine\MAssimp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,11 +50,23 @@
     <ClInclude Include="src\mine\MShader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mine\MTexture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\mine\MWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\mine\MAssimp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\f1.frag" />
+    <None Include="src\shaders\v1.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\textures\aries.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="data\textures\minn.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
