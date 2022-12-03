@@ -22,8 +22,6 @@ public:
 int main() {
 	MWindow window{ WIDTH, HEIGHT };
 
-	MY::Texture Aries{ "data/textures/aries.png", true, MY_DIFFUSE };
-
 	//MY::Vertex BRUH{ glm::vec3{1.f}, glm::vec3{1.f}, glm::vec3{1.f} };
 
 	while (window.Running()){

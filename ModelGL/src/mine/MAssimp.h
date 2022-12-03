@@ -38,10 +38,11 @@ namespace MY {
 
 	class Texture {
 	public:
-		Texture(const std::string& path, bool isRGBA, TextureType tt);
+		Texture(unsigned int& nid, MY::TextureType tt) : type{ tt }, id{ nid } {};
 		TextureType type;
 		unsigned int id;
 	};
+	unsigned int GenerateTextureFromFile(const char* path, std::string& dir);
 
 	class Mesh {
 	public:
@@ -67,7 +68,7 @@ namespace MY {
 		void LoadModel(std::string path);
 		void ProcessNode(aiNode* node, const aiScene* scene);
 		Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
-		std::vector<Texture> LoadMaterialTextures(aiMaterial* material, aiTextureType type, std::string typeName);
+		std::vector<Texture> LoadMaterialTextures(aiMaterial* material, aiTextureType type, TextureType typeName);
 	};
 
 } // END MY

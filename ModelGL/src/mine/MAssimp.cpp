@@ -47,27 +47,36 @@ namespace MY {
 		glBindVertexArray(0);
 	}
 
-	Texture::Texture(const std::string& path, bool isRGBA, MY::TextureType tt) : type{ tt } {
-		int texWidth, texHeight, colorChannels;
+	unsigned int GenerateTextureFromFile(const char* fileName, std::string& directory) {
+		unsigned int id;
+
+		directory = directory + '/' + fileName;
 		glGenTextures(1, &id);
-		glBindTexture(GL_TEXTURE_2D, id);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); // S,T,R coordinates
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		unsigned char* imageData = stbi_load(path.c_str(), &texWidth, &texHeight, &colorChannels, 0);
+
+		int width, height, colorChannels;
+		unsigned char* imageData = stbi_load(directory.c_str(), &width, &height, &colorChannels, 0);
 		if (imageData) {
-			if (isRGBA)
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texWidth, texWidth, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
-			else
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texWidth, texWidth, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+			GLenum imageFormat;
+			if (colorChannels == 1)
+				imageFormat = GL_RED;
+			else if (colorChannels == 3)
+				imageFormat = GL_RGB;
+			else if (colorChannels == 4)
+				imageFormat = GL_RGBA;
+			glBindTexture(GL_TEXTURE_2D, id);
+			glTexImage2D(GL_TEXTURE_2D, 0, imageFormat, width, height, 0, imageFormat, GL_UNSIGNED_BYTE, imageData);
 			glGenerateMipmap(GL_TEXTURE_2D);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		}
 		else {
-			std::cout << "bruh";
+			std::cout << "Texture fail;ed to fdaolsd!!!!!!!  " << directory << std::endl;
 		}
 		stbi_image_free(imageData);
-		glBindTexture(GL_TEXTURE_2D, 0);
+
+		return id;
 	}
 
 	void Model::Draw(MShader& shader) {
@@ -89,6 +98,7 @@ namespace MY {
 		return;
 	}
 
+	// Convert node data into readable meshes and textures
 	void Model::ProcessNode(aiNode* node, const aiScene* scene) {
 		for (int i{ 0 }; i < node->mNumMeshes; i++) {
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
@@ -100,10 +110,11 @@ namespace MY {
 		return;
 	}
 
+	// Push aiMesh data into Mesh data for OpenGL
 	Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene) {
 		std::vector<Vertex> vertices;
 		std::vector<unsigned int> indices;
-		std::vector<Texture> textues;
+		std::vector<Texture> textures;
 		for (int i{ 0 }; mesh->mNumVertices; i++) {
 			aiVector3D& vertInfo{ mesh->mVertices[i] };
 			glm::vec3 position{ vertInfo.x, vertInfo.y, vertInfo.z };
@@ -126,6 +137,26 @@ namespace MY {
 				indices.push_back(face.mIndices[b]);
 			}
 		}
+		if (mesh->mMaterialIndex >= 0) {
+			aiMaterial*& matInfo = scene->mMaterials[mesh->mMaterialIndex];
+			std::vector<Texture> diffuseMaps = LoadMaterialTextures(matInfo, aiTextureType_DIFFUSE, MY::TextureType::DIFFUSE);
+			textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+			std::vector<Texture> specularMaps = LoadMaterialTextures(matInfo, aiTextureType_SPECULAR, MY::TextureType::SPECULAR);
+			textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+		}
+		return Mesh{ vertices, indices, textures };
+	}
+
+	std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* material, aiTextureType type, TextureType typeName) {
+		std::vector<Texture> bruh;
+		for (int i{ 0 }; i < material->GetTextureCount(type); i++) {
+			aiString str;
+			material->GetTexture(type, i, &str);
+			unsigned int nid{ GenerateTextureFromFile(str.C_Str(), directory) };
+			Texture tex{ nid, typeName };
+			bruh.push_back(tex);
+		}
+		return bruh;
 	}
 
 } // END MY
