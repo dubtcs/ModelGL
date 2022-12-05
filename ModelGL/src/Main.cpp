@@ -1,28 +1,20 @@
 
 #define MY_USE_TEXTURE_ENUM
+#define STB_IMAGE_IMPLEMENTATION
 
 #include <iostream>
 
 #include "mine/MWindow.h"
-#include "mine/MAssimp.h"
+#include "mine/Model.h"
 
 const unsigned int WIDTH{ 1920 };
 const unsigned int HEIGHT{ 1080 };
 
-void d(unsigned int fl) {
-	std::cout << fl << std::endl;
-}
-
-class B {
-public:
-	B(int& j) : x{ j } {}
-	int x;
-};
-
 int main() {
 	MWindow window{ WIDTH, HEIGHT };
 
-	//MY::Vertex BRUH{ glm::vec3{1.f}, glm::vec3{1.f}, glm::vec3{1.f} };
+	MShader shader{ "src/shaders/v1.vert", "src/shaders/f1.frag" };
+	MY::Model model{ "data/model/backpack.obj" };
 
 	while (window.Running()){
 		

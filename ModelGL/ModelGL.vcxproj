@@ -153,28 +153,37 @@
   <ItemGroup>
     <ClCompile Include="src\extern\glad.c" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\mine\MAssimp.cpp" />
     <ClCompile Include="src\mine\MCamera.cpp" />
+    <ClCompile Include="src\mine\Model.cpp" />
     <ClCompile Include="src\mine\MShader.cpp" />
     <ClCompile Include="src\mine\MWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\extern\stb_image.h" />
     <ClInclude Include="src\mine\allinclude.h" />
-    <ClInclude Include="src\mine\MAssimp.h" />
     <ClInclude Include="src\mine\MCamera.h" />
     <ClInclude Include="src\mine\MLight.h" />
+    <ClInclude Include="src\mine\Model.h" />
     <ClInclude Include="src\mine\MShader.hpp" />
     <ClInclude Include="src\mine\MWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assimp-vc143-mtd.dll" />
+    <None Include="data\model\backpack.mtl" />
     <None Include="src\shaders\f1.frag" />
     <None Include="src\shaders\v1.vert" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="data\model\ao.jpg" />
+    <Image Include="data\model\diffuse.jpg" />
+    <Image Include="data\model\normal.png" />
+    <Image Include="data\model\roughness.jpg" />
+    <Image Include="data\model\specular.jpg" />
     <Image Include="data\textures\aries.png" />
     <Image Include="data\textures\minn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\model\source_attribution.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

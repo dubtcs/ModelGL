@@ -41,7 +41,9 @@ namespace MY {
 		Texture(unsigned int& nid, MY::TextureType tt) : type{ tt }, id{ nid } {};
 		TextureType type;
 		unsigned int id;
+		std::string path;
 	};
+	// Loads a texture and returns the associated ID
 	unsigned int GenerateTextureFromFile(const char* path, std::string& dir);
 
 	class Mesh {
@@ -63,6 +65,7 @@ namespace MY {
 	public:
 		void Draw(MShader& shader);
 	private:
+		std::vector<Texture> loadedTextures;
 		std::vector<Mesh> meshes;
 		std::string directory;
 		void LoadModel(std::string path);

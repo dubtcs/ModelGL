@@ -116,11 +116,14 @@ namespace MY {
 		std::vector<unsigned int> indices;
 		std::vector<Texture> textures;
 		for (int i{ 0 }; mesh->mNumVertices; i++) {
-			aiVector3D& vertInfo{ mesh->mVertices[i] };
+			aiVector3D& vertInfo = mesh->mVertices[i];
 			glm::vec3 position{ vertInfo.x, vertInfo.y, vertInfo.z };
 
-			vertInfo = mesh->mNormals[i];
-			glm::vec3 normal{ vertInfo.x, vertInfo.y, vertInfo.z };
+			glm::vec3 normal{ 0.f };
+			if (mesh->HasNormals()) {
+				aiVector3D normInfo = mesh->mNormals[i];
+				normal = glm::vec3{ normInfo.x, normInfo.y, normInfo.z };
+			}
 
 			glm::vec2 textureCoords{ 0.f, 0.f };
 			if (mesh->mTextureCoords[0]) {
@@ -148,15 +151,25 @@ namespace MY {
 	}
 
 	std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* material, aiTextureType type, TextureType typeName) {
-		std::vector<Texture> bruh;
+		std::vector<Texture> textures;
 		for (int i{ 0 }; i < material->GetTextureCount(type); i++) {
 			aiString str;
 			material->GetTexture(type, i, &str);
-			unsigned int nid{ GenerateTextureFromFile(str.C_Str(), directory) };
-			Texture tex{ nid, typeName };
-			bruh.push_back(tex);
+			bool isLoaded{ false };
+			for (int b{ 0 }; b < loadedTextures.size(); b++) {
+				if (std::strcmp(loadedTextures[b].path.data(), str.C_Str()) == 0) {
+					textures.push_back(loadedTextures[b]);
+					isLoaded = true;
+					break;
+				}
+			}
+			if (!isLoaded) {
+				unsigned int nid{ GenerateTextureFromFile(str.C_Str(), directory) };
+				Texture tex{ nid, typeName };
+				textures.push_back(tex);
+			}
 		}
-		return bruh;
+		return textures;
 	}
 
 } // END MY

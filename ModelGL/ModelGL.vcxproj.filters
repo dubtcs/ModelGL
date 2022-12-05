@@ -30,7 +30,7 @@
     <ClCompile Include="src\mine\MWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mine\MAssimp.cpp">
+    <ClCompile Include="src\mine\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,7 +53,7 @@
     <ClInclude Include="src\mine\MWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\mine\MAssimp.h">
+    <ClInclude Include="src\mine\Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -61,6 +61,7 @@
     <None Include="src\shaders\f1.frag" />
     <None Include="src\shaders\v1.vert" />
     <None Include="assimp-vc143-mtd.dll" />
+    <None Include="data\model\backpack.mtl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="data\textures\aries.png">
@@ -69,5 +70,23 @@
     <Image Include="data\textures\minn.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="data\model\ao.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="data\model\diffuse.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="data\model\normal.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="data\model\roughness.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="data\model\specular.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\model\source_attribution.txt" />
   </ItemGroup>
 </Project>
