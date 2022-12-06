@@ -4,7 +4,6 @@
 
 glm::vec3 MCamera::LookVector() {
 	return lVector;
-	//return glm::vec3{ glm::normalize(target - position) };
 }
 
 // right hand rule
@@ -21,6 +20,11 @@ glm::vec3 MCamera::GetPosition() {
 }
 
 void MCamera::LookAround(double x, double y) {
+	if (firstMouseMovement) {
+		lastX = x;
+		lastY = y;
+		firstMouseMovement = false;
+	}
 	double xDif{ x - lastX };
 	double yDif{ lastY - y };
 	lastX = x;
@@ -38,13 +42,30 @@ void MCamera::LookAround(double x, double y) {
 }
 
 void MCamera::MoveForward(int magnitude, float movementSpeed) {
-	position += (magnitude * movementSpeed) * LookVector();
+	if (canMove)
+		position += ((float)speed * magnitude * movementSpeed) * LookVector();
 }
 
 void MCamera::MoveLateral(int magnitude, float movementSpeed) {
-	position += glm::normalize(glm::cross(LookVector(), UpVector())) * (movementSpeed * magnitude);
+	if (canMove)
+		position += glm::normalize(glm::cross(LookVector(), UpVector())) * ((float)speed * movementSpeed * magnitude);
 }
 
 void MCamera::MoveVertical(int magnitude, float movementSpeed) {
-	position += (magnitude * movementSpeed) * UpVector();
+	if (canMove)
+		position += ((float) speed * magnitude * movementSpeed) * UpVector();
+}
+
+bool MCamera::ToggleLock() {
+	canMove = !canMove;
+	firstMouseMovement = true;
+	return canMove;
+}
+
+bool MCamera::CanMove() {
+	return canMove;
+}
+
+void MCamera::ChangeSpeed(double change) {
+	speed = std::max(1.0, speed + change);
 }

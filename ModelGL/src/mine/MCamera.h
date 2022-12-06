@@ -16,7 +16,13 @@ public:
 	void MoveLateral(int magnitude, float movementSpeed);
 	void MoveVertical(int magnitude, float movementSpeed);
 	void LookAround(double x, double y);
+	bool ToggleLock();
+	bool CanMove();
+	void ChangeSpeed(double change);
 private:
+	double speed{ 1.0 };
+	bool firstMouseMovement{ true };
+	bool canMove{ false };
 	glm::vec3 lVector{ 0.0 };
 	float sensitivity = 0.5f;
 	glm::vec3 position;
