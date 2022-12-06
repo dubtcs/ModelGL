@@ -3,7 +3,7 @@
 
 #include "MWindow.h"
 
-MCamera currentCamera{ glm::vec3{0.f,0.f,0.f} };
+MCamera currentCamera{ glm::vec3{-5.f,0.f,0.f} };
 float dt, lastFrame;
 
 MWindow::MWindow(const unsigned int& w, const unsigned int& h) : width{ w }, height{ h }, aspectRatio{ (float)w / (float)h } {
@@ -85,9 +85,7 @@ void MWindow::MouseMovement(GLFWwindow* w, double x, double y) {
 }
 
 void MWindow::KeyInput(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	if (key == GLFW_MOUSE_BUTTON_MIDDLE) {
 
-	}
 }
 
 void MWindow::MouseInput(GLFWwindow* window, int key, int action, int mods) {

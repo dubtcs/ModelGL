@@ -62,7 +62,7 @@ namespace MY {
 	private:
 		void LoadModel(std::string path);
 		void HandleNode(aiNode* node, const aiScene* scene);
-		Mesh HandleMesh(aiMesh* mesh, const aiScene* scene);
+		Mesh HandleMesh(aiMesh*& mesh, const aiScene*& scene);
 		std::vector<Texture> LoadTextures(aiMaterial* material, aiTextureType textureType, MY::TextureType TYPE);
 	private:
 		std::vector<Texture> loadedTextures;

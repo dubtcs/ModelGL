@@ -132,7 +132,7 @@ namespace MY {
 		}
 	}
 
-	Mesh Model::HandleMesh(aiMesh* mesh, const aiScene* scene) {
+	Mesh Model::HandleMesh(aiMesh*& mesh, const aiScene*& scene) {
 		std::vector<Vertex> verts;
 		std::vector<unsigned int> inds;
 		std::vector<Texture> texts;
@@ -148,7 +148,7 @@ namespace MY {
 				currentVertex.textureCoordinates = glm::vec2{ meshTexCoords.x, meshTexCoords.y };
 			}
 			else {
-				std::cout << "NOTEXT COORDS HEHEHEHEHE!!!" << endl;
+				//std::cout << "NOTEXT COORDS HEHEHEHEHE!!!" << endl;
 				currentVertex.textureCoordinates = glm::vec2{ 0.f, 0.f };
 			}
 			//std::cout << currentVertex.textureCoordinates.x << ", " << currentVertex.textureCoordinates.y << endl;
@@ -174,12 +174,12 @@ namespace MY {
 
 	// Can probably change this to static
 	std::vector<Texture> Model::LoadTextures(aiMaterial* material, aiTextureType textureType, MY::TextureType TYPE) {
-		std::cout << "Loading texture" << endl;
+		//std::cout << "Loading texture" << endl;
 		std::vector<Texture> textureList;
 		for (unsigned int i{ 0 }; i < material->GetTextureCount(textureType); i++) {
 			aiString str;
 			material->GetTexture(textureType, i, &str);
-			std::cout << str.C_Str() << endl;
+			//std::cout << str.C_Str() << endl;
 			bool shouldSkip{ false };
 			for (unsigned int b{ 0 }; b < loadedTextures.size(); b++) {
 				if (loadedTextures[b].path == directory) {
