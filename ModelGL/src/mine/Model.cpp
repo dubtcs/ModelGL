@@ -15,7 +15,7 @@ namespace MY {
 
 	unsigned int LoadTexture(const char* fileName, std::string directory) {
 		unsigned int id;
-
+		stbi_set_flip_vertically_on_load(true);
 		std::string fullPath{ directory + '/' + std::string(fileName) };
 		glGenTextures(1, &id);
 		std::cout << fullPath << endl;
@@ -84,12 +84,12 @@ namespace MY {
 
 			std::string setString{ "material." };
 			if (currentTexture.type == TextureType::DIFFUSE) {
-				setString = setString + "diffuse" + std::to_string(diffuseAmount++);
+				setString = setString + "Diffuse" + std::to_string(diffuseAmount++);
 			}
 			else {
-				setString = setString + "specular" + std::to_string(specularAmount++);
+				setString = setString + "Specular" + std::to_string(specularAmount++);
 			}
-
+			shader.Set("texture" + setString, i);
 			glBindTexture(GL_TEXTURE_2D, currentTexture.id);
 		}
 		glActiveTexture(0);
@@ -138,30 +138,32 @@ namespace MY {
 		std::vector<Texture> texts;
 		// Vertices
 		for (int i{ 0 }; i < mesh->mNumVertices; i++) {
-			aiVector3D meshVert = mesh->mVertices[i];
+			aiVector3D& meshVert = mesh->mVertices[i];
 			Vertex currentVertex{};
 			currentVertex.position = glm::vec3{ meshVert.x, meshVert.y, meshVert.z };
-			aiVector3D meshNormal = mesh->mNormals[i];
+			aiVector3D& meshNormal = mesh->mNormals[i];
 			currentVertex.normal = glm::vec3{ meshNormal.x, meshNormal.y, meshNormal.z };
-			if (mesh->mTextureCoords[0]) {
-				aiVector3D meshTexCoords = mesh->mTextureCoords[0][i];
+			if (mesh->mTextureCoords[0] != nullptr) {
+				aiVector3D& meshTexCoords = mesh->mTextureCoords[0][i];
 				currentVertex.textureCoordinates = glm::vec2{ meshTexCoords.x, meshTexCoords.y };
 			}
 			else {
+				std::cout << "NOTEXT COORDS HEHEHEHEHE!!!" << endl;
 				currentVertex.textureCoordinates = glm::vec2{ 0.f, 0.f };
 			}
+			//std::cout << currentVertex.textureCoordinates.x << ", " << currentVertex.textureCoordinates.y << endl;
 			verts.push_back(currentVertex);
 		}
 		// Indices
 		for (unsigned int i{ 0 }; i < mesh->mNumFaces; i++) {
-			aiFace currentFace{ mesh->mFaces[i] };
+			aiFace& currentFace{ mesh->mFaces[i] };
 			for (unsigned int b{ 0 }; b < currentFace.mNumIndices; b++) {
 				inds.push_back(currentFace.mIndices[b]);
 			}
 		}
 		// Materials and textures
 		if (mesh->mMaterialIndex >= 0) {
-			aiMaterial* currentMaterial = scene->mMaterials[mesh->mMaterialIndex];
+			aiMaterial*& currentMaterial = scene->mMaterials[mesh->mMaterialIndex];
 			std::vector<Texture> diffuseTextures = LoadTextures(currentMaterial, aiTextureType_DIFFUSE, MY::TextureType::DIFFUSE);
 			texts.insert(texts.end(), diffuseTextures.begin(), diffuseTextures.end());
 			std::vector<Texture> specularTexture = LoadTextures(currentMaterial, aiTextureType_SPECULAR, MY::TextureType::SPECULAR);

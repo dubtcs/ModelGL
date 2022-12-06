@@ -11,7 +11,6 @@ uniform mat4 toClipSpace;
 
 out vec2 textureCoordinates;
 
-// placeholder
 void main(){
     gl_Position = toClipSpace * toViewSpace * toWorldSpace * vec4(position, 1.0);
     textureCoordinates = textCoord;
