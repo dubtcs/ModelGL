@@ -31,6 +31,7 @@ MWindow::MWindow(const unsigned int& w, const unsigned int& h) : width{ w }, hei
 	glfwSetScrollCallback(window, ScrollInput);
 
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_STENCIL_TEST);
 }
 MWindow::~MWindow() {
 	glfwTerminate();

@@ -62,6 +62,9 @@
     <None Include="src\shaders\v1.vert" />
     <None Include="assimp-vc143-mtd.dll" />
     <None Include="data\model\backpack.mtl" />
+    <None Include="src\shaders\f1DepthBuffer.frag" />
+    <None Include="src\shaders\border.vert" />
+    <None Include="src\shaders\border.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="data\textures\aries.png">

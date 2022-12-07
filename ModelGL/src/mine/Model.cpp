@@ -77,7 +77,7 @@ namespace MY {
 	// Draw the mesh to the screen
 	void Mesh::Draw(MShader& shader) {
 		unsigned int diffuseAmount{ 1 }, specularAmount{ 1 };
-
+		shader.Use();
 		for (int i{ 0 }; i < textures.size(); i++) {
 			Texture currentTexture{ textures[i] };
 			glActiveTexture(GL_TEXTURE0 + i);

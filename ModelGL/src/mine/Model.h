@@ -13,6 +13,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <unordered_map>
 
 #include "MShader.hpp"
 
@@ -22,6 +23,8 @@
 #endif // MY_USE_TYPES
 
 namespace MY {
+
+	//std::unordered_map<std::string, Texture> USED_TEXTURES;
 
 	enum class TextureType {
 		DIFFUSE,
